@@ -12,16 +12,17 @@ function App() {
   const [show, setShow] = useState(true);
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
+  const text = "Hello World";
   const variant = {
     hidden: {
-      x: 100,
+      opacity: 0,
     },
     visible: {
-      x: 0,
+      opacity: 1,
       transition: {
-        duration: 2,
+        // duration: 2,
         // when: "afterChildren",
-        staggerChildren: 0.5,
+        staggerChildren: 0.1,
       },
     },
   };
@@ -32,9 +33,6 @@ function App() {
     },
     visible: {
       opacity: 1,
-      transition: {
-        duration: 0.5,
-      },
     },
   };
   useEffect(() => {
@@ -54,7 +52,7 @@ function App() {
     <div className="">
       <motion.div
         animate={{ x: x, y: y }}
-        className={`absolute top-0 left-0 size-4 rounded-full z-[1000] border border-white pointer-events-none`}
+        className={`absolute top-0 left-0 size-4 rounded-full z-[1000] border border-black pointer-events-none`}
       ></motion.div>
       {/* <AnimatePresence>
         {show && (
@@ -112,7 +110,7 @@ function App() {
         </motion.div> */}
 
       {/* <motion.div initial={{x:100}} animate={{x:0}} transition={{duration:.5, repeat:Infinity, repeatType:'mirror'}} className="py-2 p-6 bg-black text-white">Hello</motion.div> */}
-      <Navbar />
+      {/* <Navbar />
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<Home />}></Route>
@@ -120,7 +118,20 @@ function App() {
           <Route path="/contact" element={<Contact />}></Route>
           <Route path="/projects" element={<Projects />}></Route>
         </Routes>
-      </AnimatePresence>
+      </AnimatePresence> */}
+
+      <motion.p
+        variants={variant}
+        initial="hidden"
+        animate="visible"
+        className="text-3xl"
+      >
+        {text.split("").map((char, index) => (
+          <motion.span key={index} variants={child}>
+            {char}
+          </motion.span>
+        ))}
+      </motion.p>
     </div>
   );
 }
