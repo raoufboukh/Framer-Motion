@@ -10,40 +10,52 @@ import Navbar from './components/Navbar';
 
 function App() {
   const [show, setShow] = useState(true);
+  const [x, setX] = useState(0);
+  const [y, setY] = useState(0);
   const variant = {
     hidden: {
-      x:100
+      x: 100,
     },
     visible: {
-      x:0,
-      transition:{
-        duration:2,
+      x: 0,
+      transition: {
+        duration: 2,
         // when: "afterChildren",
-        staggerChildren: .5
-      }
-    }
-  }
+        staggerChildren: 0.5,
+      },
+    },
+  };
 
   const child = {
-    hidden:{
-      opacity:0
+    hidden: {
+      opacity: 0,
     },
     visible: {
       opacity: 1,
       transition: {
-        duration: .5
-      }
-    }
-  }
+        duration: 0.5,
+      },
+    },
+  };
   useEffect(() => {
-    setTimeout(() => {
-      setShow(false);
-    },5000)
-  })
+    // setTimeout(() => {
+    //   setShow(false);
+    // }, 5000);
+    const handleCursor = (e) => {
+      setX(e.clientX - 8);
+      setY(e.clientY - 8);
+      console.log(e.clientX, e.clientY);
+    };
+    window.addEventListener("mousemove", handleCursor);
+  });
 
   const location = useLocation();
   return (
     <div className="">
+      <motion.div
+        animate={{ x: x, y: y }}
+        className={`absolute top-0 left-0 size-4 rounded-full z-[1000] border border-white pointer-events-none`}
+      ></motion.div>
       {/* <AnimatePresence>
         {show && (
           <motion.button
@@ -55,7 +67,6 @@ function App() {
           </motion.button>
         )}
       </AnimatePresence> */}
-
 
       {/* <motion.button
         transition={{ duration: 2, type: "spring", stiffness: 200, mass: 2 }}
@@ -71,7 +82,6 @@ function App() {
         Keep Coding
       </motion.button> */}
 
-
       {/* <motion.input
         transition={{ duration: 2, type: "spring", stiffness: 200, mass: 2 }}
         whileFocus={{scale:1.2}}
@@ -79,8 +89,7 @@ function App() {
         type="text"
         /> */}
 
-
-        {/* <h1 className='font-medium text-3xl'>This is heading</h1>
+      {/* <h1 className='font-medium text-3xl'>This is heading</h1>
         <motion.button
           variants={variant}
           initial='hidden'
@@ -90,8 +99,7 @@ function App() {
           Keep Coding
         </motion.button> */}
 
-
-        {/* <h1 className='font-medium text-3xl'>This is heading</h1>
+      {/* <h1 className='font-medium text-3xl'>This is heading</h1>
         <motion.div
           variants={variant}
           initial='hidden'
@@ -103,19 +111,16 @@ function App() {
           ))}
         </motion.div> */}
 
-
-        {/* <motion.div initial={{x:100}} animate={{x:0}} transition={{duration:.5, repeat:Infinity, repeatType:'mirror'}} className="py-2 p-6 bg-black text-white">Hello</motion.div> */}
-        <Navbar/>
-        <AnimatePresence mode='wait'>
-          <Routes location={location} key={location.pathname}>
-            <Route path='/' element={<Home/>}></Route>
-            <Route path='/about' element={<About/>}></Route>
-            <Route path='/contact' element={<Contact/>}></Route>
-            <Route path='/projects' element={<Projects/>}></Route>
-          </Routes>
-        </AnimatePresence>
-
-
+      {/* <motion.div initial={{x:100}} animate={{x:0}} transition={{duration:.5, repeat:Infinity, repeatType:'mirror'}} className="py-2 p-6 bg-black text-white">Hello</motion.div> */}
+      <Navbar />
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/about" element={<About />}></Route>
+          <Route path="/contact" element={<Contact />}></Route>
+          <Route path="/projects" element={<Projects />}></Route>
+        </Routes>
+      </AnimatePresence>
     </div>
   );
 }
